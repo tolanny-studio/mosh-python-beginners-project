@@ -22,9 +22,9 @@ def game_continues():
 
 # Map shorthand inputs to their full names.
 choices = {
-    "r": "rock",
-    "p": "paper",
-    "s": "scissors",
+    "r": "🪨",
+    "p": "📜",
+    "s": "✂️",
 }
 
 # Define which choice defeats which.
