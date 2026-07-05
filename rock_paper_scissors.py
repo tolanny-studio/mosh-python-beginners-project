@@ -53,20 +53,20 @@ while True:
 
     # Reject invalid input and restart the round.
     if choice not in choices:
-        print("Invalid input")
+        print("Invalid input❌")
         continue
 
     # Determine the outcome of the round.
     if choice == computer_choice:
-        print(f"You both chose {choices[choice]}. It's a tie")
+        print(f"You both chose {choices[choice]}. It's a tie🪢")
 
     elif wins[choice] == computer_choice:
         display_choices(choice, computer_choice)
-        print("You won!")
+        print("You won👌")
 
     else:
         display_choices(choice, computer_choice)
-        print("The computer won!")
+        print("The computer won🤞")
 
     # Ask whether the player wants another round.
     if not game_continues():
