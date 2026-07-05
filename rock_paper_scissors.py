@@ -42,32 +42,51 @@ def display_choices(choice, computer_choice):
     print(f"The computer chose {choices[computer_choice]}")
 
 
-# Main game loop.
-while True:
+def get_choices():
+    """Get and validate the player's choice, and generate the computer's choice."""
+    while True:
+        # Randomly select the computer's choice.
+        computer_choice = random.choice(tuple(choices))
 
-    # Randomly select the computer's choice.
-    computer_choice = random.choice(tuple(choices))
+        # Get the player's choice.
+        choice = input("Rock, paper, or scissors? (r/p/s): ").lower()
 
-    # Get the player's choice.
-    choice = input("Rock, paper, or scissors? (r/p/s): ").lower()
+        # Reject invalid input and restart the round.
+        if choice not in choices:
+            print("Invalid input❌")
+            continue
 
-    # Reject invalid input and restart the round.
-    if choice not in choices:
-        print("Invalid input❌")
-        continue
+        return choice, computer_choice
+
+
+def compare_choices(player_choice, computer_choice):
+    """Compare both choices and announce the winner."""
 
     # Determine the outcome of the round.
-    if choice == computer_choice:
-        print(f"You both chose {choices[choice]}. It's a tie🪢")
+    if player_choice == computer_choice:
+        print(f"You both chose {choices[player_choice]}. It's a tie🪢")
 
-    elif wins[choice] == computer_choice:
-        display_choices(choice, computer_choice)
+    elif wins[player_choice] == computer_choice:
+        display_choices(player_choice, computer_choice)
         print("You won👌")
 
     else:
-        display_choices(choice, computer_choice)
+        display_choices(player_choice, computer_choice)
         print("The computer won🤞")
 
-    # Ask whether the player wants another round.
-    if not game_continues():
-        break
+
+# Main game loop.
+
+
+def play_game():
+    """Run the Rock, Paper, Scissors game until the player quits."""
+    while True:
+        player_choice, computer_choice = get_choices()
+        compare_choices(player_choice, computer_choice)
+
+        # Ask whether the player wants another round.
+        if not game_continues():
+            break
+
+
+play_game()
