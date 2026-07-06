@@ -1,4 +1,5 @@
 from termcolor import colored
+from random import shuffle
 
 # Quiz data.
 # Each question contains:
@@ -95,6 +96,9 @@ def display_result(result):
 def play_quiz():
     """Run the quiz from start to finish."""
     result = 0
+
+    # shuffle question on different code run
+    shuffle(quiz)
 
     # Loop through every question while numbering them from 1.
     for dict_index, question_dict in enumerate(quiz, start=1):
