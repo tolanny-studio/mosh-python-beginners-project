@@ -1,14 +1,7 @@
 from termcolor import colored
 from random import shuffle
 
-# Quiz data.
-# Each question contains:
-# - the question text
-# - four answer options
-# - the correct option letter
-
-# declaring dictionary key constants
-
+# Dictionary keys used throughout the quiz.
 QUESTION = "question"
 OPTIONS = "options"
 ANSWER = "answer"
@@ -19,9 +12,9 @@ def show_question(question, question_index):
     print(f"Question {question_index}. {question[QUESTION]}")
 
 
-def show_options(options):
+def show_options(question_dict):
     """Display all answer options for the current question."""
-    for letter, option in options[OPTIONS].items():
+    for letter, option in question_dict[OPTIONS].items():
         print(f"{letter.upper()}. {option}")
 
 
@@ -30,7 +23,7 @@ def get_answer():
     while True:
         answer = input("Your answer: ").lower().strip()
 
-        # Accept only A, B, C, or D.
+        # Accept only the available option letters.
         if answer not in ("a", "b", "c", "d"):
             print("Invalid input ⛔")
             continue
@@ -57,19 +50,20 @@ def compare_answers(answer_input, right_answer, question_dict):
     return 0
 
 
-def display_result(result, quiz):
+def display_result(score, total_question):
     """Display the player's final score."""
-    print(f"You got {result} out of {len(quiz)}")
+    print(f"You got {score} out of {total_question}")
 
 
 def play_quiz(quiz):
     """Run the quiz from start to finish."""
     result = 0
 
-    # shuffle question on different code run
+    # Work on a copy so the original quiz order remains unchanged.
+    quiz = quiz.copy()
     shuffle(quiz)
 
-    # Loop through every question while numbering them from 1.
+    # Display each question, collect the answer, and update the score.
     for dict_index, question_dict in enumerate(quiz, start=1):
         show_question(question_dict, dict_index)
         show_options(question_dict)
@@ -83,14 +77,14 @@ def play_quiz(quiz):
             question_dict,
         )
 
-        # Leave a blank line before the next question.
         print()
 
-    display_result(result, quiz)
+    display_result(result, len(quiz))
     print()
 
 
 def main():
+    """Create the quiz data and start the game."""
     quiz = [
         {
             QUESTION: "Which of these is the largest ocean on Earth ?",
@@ -123,9 +117,10 @@ def main():
             ANSWER: "c",
         },
     ]
+
     play_quiz(quiz)
 
 
-# Run the program only when executed directly.
+# Run the program only when this file is executed directly.
 if __name__ == "__main__":
     main()
