@@ -2,7 +2,7 @@ from termcolor import colored
 
 quiz = [
     {
-        "question": "What is the largest ocean on Earth?",
+        "question": "Which of these is the largest ocean on Earth ?",
         "options": {
             "a": "Atlantic",
             "b": "Indian",
@@ -12,7 +12,7 @@ quiz = [
         "answer": "d",
     },
     {
-        "question": "Which of these is the largest planet?",
+        "question": "The largest planet is ?",
         "options": {
             "a": "Venus",
             "b": "Jupiter",
@@ -22,7 +22,7 @@ quiz = [
         "answer": "b",
     },
     {
-        "question": "Which is the most populated continent?",
+        "question": "Which is the most populated continent ?",
         "options": {
             "a": "Africa",
             "b": "Europe",
@@ -40,7 +40,7 @@ def show_question(question, question_index):
 
 def show_option(options):
     for letter, option in options["options"].items():
-        print(f"{letter.upper()}. {option.capitalize()}")
+        print(f"{letter.upper()}. {option}")
 
 
 def correct_answer(answer):
@@ -56,7 +56,7 @@ def get_answer():
         return answer
 
 
-def compare_answers(answer_input, right_answer, question):
+def compare_answers(answer_input, right_answer, question_dict):
     if answer_input == right_answer:
         color_text = colored("Correct answer👊", "green")
         print(color_text)
@@ -64,7 +64,7 @@ def compare_answers(answer_input, right_answer, question):
 
     color_text = colored("Wrong answer ❌", "red")
     print(color_text)
-    color_correct_answer = f"The correct answer is {question['options'][right_answer]}"
+    color_correct_answer = f"The correct answer is {question_dict['answer'].upper()}. {question_dict['options'][right_answer]}"
     print(colored(color_correct_answer, "green"))
     return 0
 
@@ -75,15 +75,15 @@ def display_result(result):
 
 def play_quiz():
     result = 0
-    question_index = 0
-    for question_dict in quiz:
-        show_question(question_dict, question_index)
-        question_index += 1
+    for dict_index, question_dict in enumerate(quiz, start=1):
+        show_question(question_dict, dict_index)
         show_option(question_dict)
         right_answer = correct_answer(question_dict)
         answer_input = get_answer()
         result += compare_answers(answer_input, right_answer, question_dict)
+        print()
     display_result(result)
+    print()
 
 
 if __name__ == "__main__":
