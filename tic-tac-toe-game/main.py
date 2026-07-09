@@ -1,27 +1,41 @@
-from termcolor import cprint
+from termcolor import cprint, colored
 
 # Constants used throughout the game.
 LINE = "---+---+---"
 BOARD_SIZE = 3
+X = "X"
+O = "O"
+
+
+def color_mark(mark):
+    """Return a colored version of the board mark."""
+
+    if mark == X:
+        return colored(mark, "red")
+
+    if mark == O:
+        return colored(mark, "green")
+
+    return mark
 
 
 def display_board(board):
     """Display the current state of the Tic-Tac-Toe board."""
 
     for index, row in enumerate(board):
-        cprint(LINE, "yellow")
-        cprint(f" {row[0]} | {row[1]} | {row[2]}", "yellow")
+        print(LINE)
+        print(f" {color_mark(row[0])} | {color_mark(row[1])} | {color_mark(row[2])}")
 
         if index != BOARD_SIZE - 1:
-            cprint(LINE, "yellow")
+            print(LINE)
 
 
 def switch_player(player):
     """Return the next player's symbol."""
 
-    if player == "X":
-        return "O"
-    return "X"
+    if player == X:
+        return O
+    return X
 
 
 def is_full_board(board):
@@ -99,7 +113,7 @@ def replay_game():
 def play_game(board):
     """Run a single Tic-Tac-Toe game."""
 
-    current_player = "X"
+    current_player = X
 
     while not is_full_board(board):
         # Get a valid move from the current player.
@@ -139,7 +153,7 @@ def main():
         play_game(board)
 
         if not replay_game():
-            cprint("Thanks for playing! 👋", "green")
+            cprint("Thanks for playing! 👊", "green")
             break
 
 
