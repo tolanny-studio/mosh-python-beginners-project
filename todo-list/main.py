@@ -1,4 +1,4 @@
-from termcolor import colored, cprint
+from termcolor import  cprint
 
 tasks = []
 
@@ -16,25 +16,43 @@ def validate_task_input(prompt):
     if len(task) < 3:
         cprint("Invalid task ⛔", "light_red")
         return False
+    if task in tasks:
+        cprint("Task is present in task list ⛔", "light_red")
+        return False
+    return task
 
 
 def add_task():
     task_name = validate_task_input("Enter task: ")
     if task_name:
-      print()
-      tasks.append(task_name)
-      cprint(f'"{task_name}" added as task', "light_blue")
+        print()
+        tasks.append(task_name)
+        cprint(f'"{task_name}" added as task', "light_blue")
+
+
+def validate_remove_task(task_index):
+    try:
+        task_number = int(input(task_index))
+    except ValueError:
+        cprint("Invalid task ⛔", "light_red")
+        return False
+
+    if task_number == 0 or task_number > len(tasks):
+        cprint("Invalid task number⛔", "light_red")
+        return False
+    return task_number
 
 
 def remove_task():
-    task_id = int(input("Enter task number: "))
-    removed_task = tasks.pop(task_id - 1)
-    print()
-    cprint(f"{removed_task} removed", "light_red")
-    print()
-    print("Current task")
-    print()
-    view_task()
+    task_id = validate_remove_task("Enter task number: ")
+    if task_id:
+        removed_task = tasks.pop(task_id - 1)
+        print()
+        cprint(f"{removed_task} removed", "light_red")
+        print()
+        print("Current task")
+        print()
+        view_task()
 
 
 def exit_task():
@@ -59,7 +77,14 @@ def display_operations():
 
 
 def choose_operation():
-    choice = int(input("Enter your choice 💽: "))
+    try:
+        choice = int(input("Enter your choice 💽: "))
+    except ValueError:
+        cprint("Invalid operation ⛔", "light_red")
+        return False
+    if choice not in operations:
+        cprint("Invalid operation index ⛔", "light_red")
+        return False
     print()
     return choice
 
@@ -71,5 +96,6 @@ def get_operation(operation_index):
 while True:
     display_operations()
     operation_choice = choose_operation()
-    operation = get_operation(operation_choice)
-    operation()
+    if operation_choice:
+        operation = get_operation(operation_choice)
+        operation()
