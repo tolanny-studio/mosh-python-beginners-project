@@ -12,11 +12,9 @@ def view_task():
     print(tasks)
 
 
-def add_task():
-    print("Add task")
-    task_id = int(input("Enter task number: "))
+def add_task(tasks):
     task_name = input("Enter task ")
-    tasks.append({task_id:task_name})
+    tasks.append({len(tasks)+1:task_name})
 
 
 def remove_task():
