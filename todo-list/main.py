@@ -11,11 +11,19 @@ def view_task():
         cprint(f"{task_id}. {task}", "light_yellow")
 
 
+def validate_task_input(prompt):
+    task = input(prompt).capitalize()
+    if len(task) < 3:
+        cprint("Invalid task ⛔", "light_red")
+        return False
+
+
 def add_task():
-    task_name = input("Enter task: ").capitalize()
-    print()
-    tasks.append(task_name)
-    cprint(f'"{task_name}" added as task', "light_blue")
+    task_name = validate_task_input("Enter task: ")
+    if task_name:
+      print()
+      tasks.append(task_name)
+      cprint(f'"{task_name}" added as task', "light_blue")
 
 
 def remove_task():
