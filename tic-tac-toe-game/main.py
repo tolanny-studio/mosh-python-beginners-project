@@ -69,8 +69,20 @@ def get_coordinate():
     return row, column
 
 
+def replay_game():
+    while True:
+        replay = input("Do you wish to replay ? (y,n) ").lower()
+
+        if replay not in ("y", "n"):
+            print("Invalid input❌. Enter y or n ")
+            continue
+        if replay == "y":
+            return True
+        return False
+
+
 def play_game(board):
-    
+
     current_player = "X"
 
     while not is_full_board(board):
@@ -93,12 +105,14 @@ def play_game(board):
 
     cprint("It's a draw! 🤝", "cyan")
 
-
 def main():
-
-    board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-    display_board(board)
-    play_game(board)
+    while True:
+        board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+        display_board(board)
+        play_game(board)
+        if not replay_game():
+            cprint("Thanks for playing","green")
+            break
 
 
 if __name__ == "__main__":
