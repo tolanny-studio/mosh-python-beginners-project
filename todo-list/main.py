@@ -1,31 +1,37 @@
-# To do list menu:
-# 1. View Tasks
-# 2. Add a task
-# 3. Remove a task
-# 4. Exit
-# Enter your choice(1-4)
+from termcolor import colored, cprint
 
 tasks = []
 
 
 def view_task():
-    print(tasks)
+    if len(tasks) == 0:
+        cprint("No task available 📪", "light_red")
+        return
+    for task_id, task in enumerate(tasks, start=1):
+        cprint(f"{task_id}. {task}", "light_yellow")
 
 
-def add_task(tasks):
-    task_name = input("Enter task ")
-    tasks.append({len(tasks)+1:task_name})
+def add_task():
+    task_name = input("Enter task: ").capitalize()
+    print()
+    tasks.append(task_name)
+    cprint(f'"{task_name}" added as task', "light_blue")
 
 
 def remove_task():
-    print("remove task")
     task_id = int(input("Enter task number: "))
-    tasks.pop(task_id)
-    
+    removed_task = tasks.pop(task_id - 1)
+    print()
+    cprint(f"{removed_task} removed", "light_red")
+    print()
+    print("Current task")
+    print()
+    view_task()
 
 
 def exit_task():
-    print("Exit task")
+    cprint("Exit todo", "cyan")
+    print()
     exit()
 
 
@@ -38,17 +44,21 @@ operations = {
 
 
 def display_operations():
+    print()
     for operation_index, (operation_name, _) in operations.items():
-        print(f"{operation_index}. {operation_name}")
+        cprint(f"{operation_index}. {operation_name}", "dark_grey")
+    print()
 
 
 def choose_operation():
-    choice = int(input("Enter your choice: "))
+    choice = int(input("Enter your choice 💽: "))
+    print()
     return choice
 
 
 def get_operation(operation_index):
     return operations[operation_index][1]
+
 
 while True:
     display_operations()
