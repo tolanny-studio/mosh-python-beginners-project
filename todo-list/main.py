@@ -1,10 +1,11 @@
-from termcolor import  cprint
+from sys import exit
+from termcolor import cprint
 
 tasks = []
 
 
 def view_task():
-    if len(tasks) == 0:
+    if not tasks:
         cprint("No task available 📪", "light_red")
         return
     for task_id, task in enumerate(tasks, start=1):
@@ -12,13 +13,13 @@ def view_task():
 
 
 def validate_task_input(prompt):
-    task = input(prompt).capitalize()
+    task = input(prompt).strip().title()
     if len(task) < 3:
         cprint("Invalid task ⛔", "light_red")
-        return False
+        return None
     if task in tasks:
         cprint("Task is present in task list ⛔", "light_red")
-        return False
+        return None
     return task
 
 
@@ -35,15 +36,18 @@ def validate_remove_task(task_index):
         task_number = int(input(task_index))
     except ValueError:
         cprint("Invalid task ⛔", "light_red")
-        return False
+        return None
 
     if task_number == 0 or task_number > len(tasks):
         cprint("Invalid task number⛔", "light_red")
-        return False
+        return None
     return task_number
 
 
 def remove_task():
+    if not tasks:
+        cprint("No task available 📪", "light_red")
+        return
     task_id = validate_remove_task("Enter task number: ")
     if task_id:
         removed_task = tasks.pop(task_id - 1)
@@ -81,10 +85,10 @@ def choose_operation():
         choice = int(input("Enter your choice 💽: "))
     except ValueError:
         cprint("Invalid operation ⛔", "light_red")
-        return False
+        return None
     if choice not in operations:
         cprint("Invalid operation index ⛔", "light_red")
-        return False
+        return None
     print()
     return choice
 
@@ -97,5 +101,4 @@ while True:
     display_operations()
     operation_choice = choose_operation()
     if operation_choice:
-        operation = get_operation(operation_choice)
-        operation()
+        get_operation(operation_choice)()
