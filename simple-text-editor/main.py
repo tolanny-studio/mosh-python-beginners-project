@@ -21,3 +21,10 @@ def write_file():
             file.writelines(get_input())
     except OSError:
         print(f"{file_name} not present")
+        
+def main():
+    write_file()
+
+
+if __name__ == "__main__":
+    main()
