@@ -1,4 +1,13 @@
+import os
+
+from termcolor import cprint, colored
+
 BREAK_WORD = "SAVE"
+DIVIDER = "-" * 50
+
+
+def should_save(word):
+    return word.upper() == BREAK_WORD
 
 
 def get_input():
@@ -8,22 +17,38 @@ def get_input():
     print()
     while True:
         word = input().strip()
-        if word == BREAK_WORD:
+        if should_save(word):
             break
         words.append(word + "\n")
     return words
 
 
-def write_file():
+def read_file(file_name):
+    try:
+        with open(file_name, "r") as file:
+            return file.read()
+    except OSError as e:
+        print(f"Error : {e}")
+
+
+def edit_file():
     file_name = input("Enter file name to open or create: ").strip()
     try:
-        with open(file_name, "w") as file:
+        if os.path.exists(file_name):
+            print(DIVIDER)
+            cprint(read_file(file_name), "red")
+            print(DIVIDER)
+        with open(file_name, "a") as file:
             file.writelines(get_input())
-    except OSError:
-        print(f"{file_name} not present")
-        
+        print(DIVIDER)
+        cprint(read_file(file_name), "green")
+        print(DIVIDER)
+    except OSError as e:
+        print(f"Error : {e}")
+
+
 def main():
-    write_file()
+    edit_file()
 
 
 if __name__ == "__main__":
