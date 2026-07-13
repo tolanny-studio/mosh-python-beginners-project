@@ -24,13 +24,20 @@ def validate_digit(digits):
     return True
 
 
+def get_digits():
+    guess_digits = input("Enter four unique digits: ")
+    if not validate_digit(guess_digits):
+        print("Invalid digit")
+        return False
+    return guess_digits
+
+
 def compare_digits():
     generated_digits = generate_four_unique_digit()
     print(generated_digits)
     while True:
-        guess_digits = input("Enter four unique digits: ")
-        if not validate_digit(guess_digits):
-            print("Invalid digit")
+        guess_digits = get_digits()
+        if not guess_digits:
             continue
         cow = 0
         bull = 0
