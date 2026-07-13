@@ -24,7 +24,7 @@ def validate_digit(digits):
     return True
 
 
-def get_four_unique_digit():
+def compare_digits():
     generated_digits = generate_four_unique_digit()
     print(generated_digits)
     while True:
@@ -46,7 +46,7 @@ def get_four_unique_digit():
 
 
 def main():
-    get_four_unique_digit()
+    compare_digits()
 
 
 if __name__ == "__main__":
