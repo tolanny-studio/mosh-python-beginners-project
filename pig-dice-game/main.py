@@ -1,6 +1,9 @@
 import random
 import sys
 
+WINNING_SCORE = 100
+LOSING_ROLL = 1
+
 player = {
     "player_1": {"id": 1, "score": 0},
     "player_2": {"id": 2, "score": 0},
@@ -8,7 +11,7 @@ player = {
 
 
 def dice_roll():
-    return random.choice(range(1, 7))
+    return random.randint(1, 6)
 
 
 def switch_player(current_player):
@@ -16,47 +19,36 @@ def switch_player(current_player):
 
 
 def check_winner():
-    if player["player_1"]["score"] == 100:
-        return player["player_1"]["id"]
-    if player["player_2"]["score"] == 100:
-        return player["player_2"]["id"]
+    for player_data in player.values():
+        if player_data["score"] >= WINNING_SCORE:
+            return player_data
 
 
-def end_game():
-    if player["player_1"]["score"] > 100:
-        print("Player 1 scored above 100 \nGame Over ⛔")
-    if player["player_2"]["score"] > 100:
-        print("Player 2 scored above 100 \nGame Over ⛔")
-    sys.exit()
+def display_scores():
+    print(
+        f"Current scores: Player 1: {player['player_1']['score']}, "
+        f"Player 2: {player['player_2']['score']}"
+    )
 
 
 def play_game():
     current_player = player["player_1"]["id"]
 
     while True:
-        current = player[f"player_{current_player}"]
+        player_data = player[f"player_{current_player}"]
         turn_score = 0
 
         print(f"\nPlayer {current_player}'s turn")
 
         while True:
-            winner = check_winner()
-            if winner:
-                print(
-                    f"The winner of the game is {player[f'player_{winner}']['id']} with a score of 100"
-                )
-                break
-            end_game()
+
             dice_number = dice_roll()
             print(f"You rolled a {dice_number}")
-            if dice_number == 1:
+            if dice_number == LOSING_ROLL:
                 turn_score = 0
                 print("You rolled a 1! You scored 0 this turn.")
-
-                print(
-                    f"Current scores: Player 1: {player['player_1']['score']}, "
-                    f"Player 2: {player['player_2']['score']}"
-                )
+                player[f"player_{current_player}"]["score"] = 0
+                display_scores()
 
                 current_player = switch_player(current_player)
                 break
@@ -76,14 +68,16 @@ def play_game():
                 continue
 
             # Bank the turn score
-            current["score"] += turn_score
+            player_data["score"] += turn_score
+
+            winner = check_winner()
+            if winner:
+                print(f"The winner of the game is {winner["id"]} with a score of 100")
+                return
 
             print(f"You scored {turn_score} this turn.")
 
-            print(
-                f"Current scores: Player 1: {player['player_1']['score']}, "
-                f"Player 2: {player['player_2']['score']}"
-            )
+            display_scores()
 
             current_player = switch_player(current_player)
             break
