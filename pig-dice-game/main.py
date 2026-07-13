@@ -4,7 +4,7 @@ import sys
 WINNING_SCORE = 100
 LOSING_ROLL = 1
 
-player = {
+players = {
     "player_1": {"id": 1, "score": 0},
     "player_2": {"id": 2, "score": 0},
 }
@@ -19,23 +19,23 @@ def switch_player(current_player):
 
 
 def check_winner():
-    for player_data in player.values():
+    for player_data in players.values():
         if player_data["score"] >= WINNING_SCORE:
             return player_data
 
 
 def display_scores():
     print(
-        f"Current scores: Player 1: {player['player_1']['score']}, "
-        f"Player 2: {player['player_2']['score']}"
+        f"Current scores: Player 1: {players['player_1']['score']}, "
+        f"Player 2: {players['player_2']['score']}"
     )
 
 
 def play_game():
-    current_player = player["player_1"]["id"]
+    current_player = players["player_1"]["id"]
 
     while True:
-        player_data = player[f"player_{current_player}"]
+        player_data = players[f"player_{current_player}"]
         turn_score = 0
 
         print(f"\nPlayer {current_player}'s turn")
@@ -45,9 +45,8 @@ def play_game():
             dice_number = dice_roll()
             print(f"You rolled a {dice_number}")
             if dice_number == LOSING_ROLL:
-                turn_score = 0
                 print("You rolled a 1! You scored 0 this turn.")
-                player[f"player_{current_player}"]["score"] = 0
+                player_data["score"] = 0
                 display_scores()
 
                 current_player = switch_player(current_player)
@@ -72,7 +71,7 @@ def play_game():
 
             winner = check_winner()
             if winner:
-                print(f"The winner of the game is {winner["id"]} with a score of 100")
+                f"Player {winner['id']} wins with {winner['score']} points!"
                 return
 
             print(f"You scored {turn_score} this turn.")
