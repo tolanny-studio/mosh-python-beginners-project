@@ -10,18 +10,44 @@ def generate_four_unique_digit():
     return four_unique_digit
 
 
+def validate_digit(digits):
+    digit_list = []
+    for digit in digits:
+        if not (digit >= "0" and digit <= "9"):
+            return False
+        if digit not in digit_list:
+            digit_list.append(digit)
+        else:
+            return False
+    if len(digits) != 4:
+        return False
+    return True
+
+
 def get_four_unique_digit():
     generated_digits = generate_four_unique_digit()
     print(generated_digits)
-    guess_digits = input("Enter four unique digits: ")
-    cow = 0
-    bull = 0
-    for index, digit in enumerate(guess_digits):
-        if digit in generated_digits:
-            cow += 1
-            if index == generated_digits.find(digit):
-                bull += 1
-                cow -= 1
-    print(f"There are {cow} cows, and {bull} bulls")
+    while True:
+        guess_digits = input("Enter four unique digits: ")
+        if not validate_digit(guess_digits):
+            print("Invalid digit")
+            continue
+        cow = 0
+        bull = 0
+        for index, digit in enumerate(guess_digits):
+            if digit in generated_digits:
+                cow += 1
+                if index == generated_digits.find(digit):
+                    bull += 1
+                    cow -= 1
+        print(f"There are {cow} cows, and {bull} bulls")
+        if bull == 4:
+            break
 
-get_four_unique_digit()
+
+def main():
+    get_four_unique_digit()
+
+
+if __name__ == "__main__":
+    main()
