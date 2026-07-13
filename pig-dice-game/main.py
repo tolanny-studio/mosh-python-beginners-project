@@ -1,4 +1,5 @@
 import random
+import sys
 
 player = {
     "player_1": {"id": 1, "score": 0},
@@ -14,6 +15,21 @@ def switch_player(current_player):
     return 2 if current_player == 1 else 1
 
 
+def check_winner():
+    if player["player_1"]["score"] == 100:
+        return player["player_1"]["id"]
+    if player["player_2"]["score"] == 100:
+        return player["player_2"]["id"]
+
+
+def end_game():
+    if player["player_1"]["score"] > 100:
+        print("Player 1 scored above 100 \nGame Over ⛔")
+    if player["player_2"]["score"] > 100:
+        print("Player 2 scored above 100 \nGame Over ⛔")
+    sys.exit()
+
+
 def play_game():
     current_player = player["player_1"]["id"]
 
@@ -24,9 +40,15 @@ def play_game():
         print(f"\nPlayer {current_player}'s turn")
 
         while True:
+            winner = check_winner()
+            if winner:
+                print(
+                    f"The winner of the game is {player[f'player_{winner}']['id']} with a score of 100"
+                )
+                break
+            end_game()
             dice_number = dice_roll()
             print(f"You rolled a {dice_number}")
-
             if dice_number == 1:
                 turn_score = 0
                 print("You rolled a 1! You scored 0 this turn.")
