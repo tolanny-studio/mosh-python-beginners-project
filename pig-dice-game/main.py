@@ -1,30 +1,28 @@
 import random
 
-PLAYER_1 = 1
-PLAYER_2 = 2
+player = {"player_1": (1, 0), "player_2": (2, 0)}
 
-current_player = PLAYER_1
+
 
 
 def dice_roll():
     return random.choice(range(1, 7))
 
 
-def switch_player():
-    if current_player == PLAYER_1:
-        return PLAYER_2
-    return PLAYER_1
+def switch_player(current_player):
+    return 2 if current_player == 1 else 1
 
 
 def play_game():
+    current_player = player["player_1"][0]
     while True:
-        print(f"Player{current_player}'s turn")
+        print(f"Player {current_player}'s turn")
         while True:
-            print(f"You rolled a {dice_roll()}")
-            roll_again = input("Roll again: ").lower()
-            if roll_again in ("yes", "y"):
-                continue
-            break
+            dice_number = dice_roll()
+            print(f"You rolled a {dice_number}")
+            if dice_number == 1:
+                break
+        current_player = switch_player(current_player)
 
 
 def main():
