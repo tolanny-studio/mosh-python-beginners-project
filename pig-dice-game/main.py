@@ -1,5 +1,4 @@
 import random
-import sys
 
 WINNING_SCORE = 100
 LOSING_ROLL = 1
@@ -18,7 +17,7 @@ def switch_player(current_player):
     return 2 if current_player == 1 else 1
 
 
-def check_winner():
+def check_winner(players):
     for player_data in players.values():
         if player_data["score"] >= WINNING_SCORE:
             return player_data
@@ -69,7 +68,7 @@ def play_game():
             # Bank the turn score
             player_data["score"] += turn_score
 
-            winner = check_winner()
+            winner = check_winner(players)
             if winner:
                 f"Player {winner['id']} wins with {winner['score']} points!"
                 return
