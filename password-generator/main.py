@@ -2,6 +2,8 @@ import string
 import random
 import secrets
 
+SYSTEM_RANDOM = random.SystemRandom()
+
 
 def password_generator(
     password_length, include_upper_case, include_special_character, include_number
@@ -27,7 +29,7 @@ def password_generator(
         password += secrets.choice(characters)
 
     password = list(password)
-    random.SystemRandom().shuffle(password)
+    SYSTEM_RANDOM.shuffle(password)
     password = "".join(password)
     return password
 
@@ -37,7 +39,7 @@ def validate_password_length(prompt):
         try:
             password_length = int(input(f"\n{prompt}"))
             if password_length < 5:
-                print("\nInvalid Input ⛔ Password should be more than four digit")
+                print("\nInvalid Input ⛔ Password length must be at least 5 characters.")
                 continue
             return password_length
         except ValueError:
@@ -66,7 +68,7 @@ def main():
         password_length, include_upper_case, include_special_character, include_number
     )
 
-    print(password)
+    print(f"\nGenerated password: {password}")
 
 
 if __name__ == "__main__":
