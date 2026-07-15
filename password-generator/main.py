@@ -35,9 +35,9 @@ def validate_password_length(prompt):
     while True:
         try:
             password_length = int(input(prompt))
-            return password_length
         except ValueError:
             print("Invalid input⛔. Enter an integer")
+        return password_length
         
 
 
