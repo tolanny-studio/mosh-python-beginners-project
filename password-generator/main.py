@@ -31,8 +31,18 @@ def password_generator(
     return password
 
 
+def validate_password_length(prompt):
+    while True:
+        try:
+            password_length = int(input(prompt))
+            return password_length
+        except ValueError:
+            print("Invalid input⛔. Enter an integer")
+        
+
+
 def main():
-    password_length = int(input("Enter password length: "))
+    password_length = validate_password_length("Enter password length: ")
     include_upper_case = (
         input("Do you want to include an uppercase (y/n): ").lower() == "y"
     )
