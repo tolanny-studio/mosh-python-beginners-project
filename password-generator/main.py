@@ -1,5 +1,6 @@
 import string
 import random
+import secrets
 
 
 def password_generator(
@@ -7,11 +8,11 @@ def password_generator(
 ):
     password = ""
     if include_upper_case:
-        password += random.choice(string.ascii_uppercase)
+        password += secrets.choice(string.ascii_uppercase)
     if include_special_character:
-        password += random.choice(string.punctuation)
+        password += secrets.choice(string.punctuation)
     if include_number:
-        password += random.choice(string.digits)
+        password += secrets.choice(string.digits)
 
     characters = string.ascii_lowercase
 
@@ -23,10 +24,10 @@ def password_generator(
         characters += string.digits
 
     for _ in range(password_length - len(password)):
-        password += random.choice(characters)
+        password += secrets.choice(characters)
 
     password = list(password)
-    random.shuffle(password)
+    random.SystemRandom().shuffle(password)
     password = "".join(password)
     return password
 
