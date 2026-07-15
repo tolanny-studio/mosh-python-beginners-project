@@ -35,10 +35,12 @@ def validate_password_length(prompt):
     while True:
         try:
             password_length = int(input(prompt))
+            if password_length < 5:
+                print("Invalid Input⛔. Password should be more than four digit")
+                continue
+            return password_length
         except ValueError:
             print("Invalid input⛔. Enter an integer")
-        return password_length
-        
 
 
 def main():
