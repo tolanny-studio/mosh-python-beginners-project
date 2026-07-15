@@ -25,6 +25,9 @@ def password_generator(
     for _ in range(password_length - len(password)):
         password += random.choice(characters)
 
+    password = list(password)
+    random.shuffle(password)
+    password = "".join(password)
     return password
 
 
