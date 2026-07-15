@@ -32,19 +32,25 @@ def main():
     blanks = ""
     for _ in random_word:
         blanks += "_"
-    # print(blanks)
+    print(blanks)
     list_blanks = list(blanks)
     while True:
         guess = get_guess_letter()
-        for index, char in enumerate(random_word):
-            if char == guess:
-                print("Good guess. Keep it up")
-                list_blanks[index] = guess
+        if guess in random_word:
+            for index, char in enumerate(random_word):
+                if char == guess:
+                    if guess not in list_blanks:
+                        print("Good guess. Keep it up")
+                        print(f"lives:{lives}")
+                    list_blanks[index] = guess
+        else:
+            print("Wrong guess ❌ Retry")
+            lives -= 1
+            print(f"lives:{lives}")
 
         print(random_word)
         blanks = "".join(list_blanks)
         print(blanks)
-        lives -= 1
 
         if lives == 0:
             print("Game Over ⛔")
@@ -53,8 +59,7 @@ def main():
             print("Kudos 👊 You made it.")
             break
     if retry_game():
-      main()
-      lives = 6
+        main()
 
 
 if __name__ == "__main__":
