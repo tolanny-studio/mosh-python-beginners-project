@@ -12,7 +12,18 @@ def password_generator(
         password += random.choice(string.punctuation)
     if include_number:
         password += random.choice(string.digits)
-        
+
+    characters = string.ascii_lowercase
+
+    if include_upper_case:
+        characters += string.ascii_uppercase
+    if include_special_character:
+        characters += string.punctuation
+    if include_number:
+        characters += string.digits
+
+    for _ in range(password_length - len(password)):
+        password += random.choice(characters)
 
     return password
 
