@@ -1,4 +1,5 @@
 import random
+import string
 
 
 def get_word_list():
@@ -13,15 +14,26 @@ def select_random_word():
     return random.choice(get_word_list())
 
 
-def get_guess_letter():
-    return input("Enter a letter🔤: ").lower()
+
+def get_guess_letter(blanks):
+    while True:
+        guess = input("\nEnter a letter🔤: ").lower()
+        if len(guess) != 1:
+            print("\nEnter a single letter")
+            print(blanks)
+            continue
+        if guess not in string.ascii_lowercase:
+            print("\nEnter an alphabet only")
+            print(blanks)
+            continue
+        return guess
 
 
 def retry_game():
     while True:
-        retry = input("Do you want to retry 🔄️: ").lower()
+        retry = input("\nDo you wish to retry 🔄️: ").lower()
         if retry not in ("y", "n"):
-            print("Invalid input")
+            print("\nInvalid input ❌")
             continue
         return retry == "y"
 
@@ -35,7 +47,7 @@ def main():
     print(blanks)
     list_blanks = list(blanks)
     while True:
-        guess = get_guess_letter()
+        guess = get_guess_letter(blanks)
         if guess in random_word:
             for index, char in enumerate(random_word):
                 if char == guess:
@@ -44,19 +56,18 @@ def main():
                         print(f"lives:{lives}")
                     list_blanks[index] = guess
         else:
-            print("Wrong guess ❌ Retry")
+            print("\nWrong guess ❌ Retry")
             lives -= 1
-            print(f"lives:{lives}")
+            print(f"\nlives:{lives}")
 
-        print(random_word)
         blanks = "".join(list_blanks)
         print(blanks)
 
         if lives == 0:
-            print("Game Over ⛔")
+            print("\nGame Over ⛔")
             break
         if "_" not in blanks:
-            print("Kudos 👊 You made it.")
+            print("\nKudos 👊 You made it.")
             break
     if retry_game():
         main()
