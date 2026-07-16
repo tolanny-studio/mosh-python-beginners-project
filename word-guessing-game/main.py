@@ -1,5 +1,6 @@
 import random
 import string
+import sys
 
 # Load the word list once when the program starts.
 WORD_LIST = []
@@ -13,11 +14,18 @@ def get_word_list():
     """
     word_list = []
 
-    with open("./word.txt", "r") as file:
-        for line in file:
-            word_list.append(line.strip())
+    try:
+        with open("./word.txt", "r") as file:
+            for line in file:
+                word_list.append(line.strip())
+
+    except FileNotFoundError:
+        print("word.txt file not found")
+        sys.exit(1)
 
     return word_list
+
+    
 
 
 WORD_LIST = get_word_list()
