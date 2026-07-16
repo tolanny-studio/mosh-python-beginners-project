@@ -1,5 +1,7 @@
 import random
 
+SYMBOLS = ["🍉", "🍊", "🍌"]
+
 
 def validate_amount(prompt):
     while True:
@@ -31,16 +33,25 @@ def get_betting_amount(starting_amount):
         return betting_amount
 
 
+def generate_symbol():
+    selected_symbol = []
+    for _ in range(len(SYMBOLS)):
+        selected_symbol.append(random.choice(SYMBOLS))
+    return selected_symbol
+
+
 def play_game():
 
-    symbols = ["🍉", "🍊", "🍌"]
-    selected_symbol = []
-    selected_symbol_string = ""
-    for _ in range(len(symbols)):
-        selected_symbol.append(random.choice(symbols))
+    # symbols = ["🍉", "🍊", "🍌"]
+    # selected_symbol = []
+    # selected_symbol_string = ""
+    # for _ in range(len(symbols)):
+    #     selected_symbol.append(random.choice(symbols))
 
+    selected_symbol = generate_symbol()
     symbol_occurrence = 1
     symbol_occurrence_list = []
+    selected_symbol_string = ""
 
     for index, symbol in enumerate(selected_symbol):
         if index < len(selected_symbol) - 1:
