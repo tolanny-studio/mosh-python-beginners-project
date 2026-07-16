@@ -25,14 +25,15 @@ def get_word_list():
 
     return word_list
 
-    
-
 
 WORD_LIST = get_word_list()
 
 
 def select_random_word():
     """Select and return a random word from the word list."""
+    if not WORD_LIST:
+        print("No word in file")
+        sys.exit(1)
     return random.choice(WORD_LIST)
 
 
