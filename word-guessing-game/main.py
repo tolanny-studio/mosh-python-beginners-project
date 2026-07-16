@@ -10,9 +10,11 @@ def get_word_list():
     return word_list
 
 
-def select_random_word():
-    return random.choice(get_word_list())
+WORD_LIST = get_word_list()
 
+
+def select_random_word():
+    return random.choice(WORD_LIST)
 
 
 def get_guess_letter(blanks):
@@ -38,27 +40,31 @@ def retry_game():
         return retry == "y"
 
 
-def main():
+def play_game():
     lives = 6
     random_word = select_random_word()
-    blanks = ""
-    for _ in random_word:
-        blanks += "_"
+    blanks = "_" * len(random_word)
     print(blanks)
     list_blanks = list(blanks)
+    guesses = set()
+
     while True:
         guess = get_guess_letter(blanks)
+        if guess in guesses:
+            print(f"Letter {guess} already guessed")
+            continue
         if guess in random_word:
+            print("Good guess. Keep it up")
+            print(f"\nLives: {lives}")
+            guesses.add(guess)
             for index, char in enumerate(random_word):
                 if char == guess:
-                    if guess not in list_blanks:
-                        print("Good guess. Keep it up")
-                        print(f"lives:{lives}")
                     list_blanks[index] = guess
         else:
             print("\nWrong guess ❌ Retry")
             lives -= 1
-            print(f"\nlives:{lives}")
+            guesses.add(guess)
+            print(f"\nLives: {lives}")
 
         blanks = "".join(list_blanks)
         print(blanks)
@@ -69,8 +75,15 @@ def main():
         if "_" not in blanks:
             print("\nKudos 👊 You made it.")
             break
-    if retry_game():
-        main()
+
+
+def main():
+    while True:
+        play_game
+
+        if not retry_game():
+            print("Thanks for playing")
+            break
 
 
 if __name__ == "__main__":
