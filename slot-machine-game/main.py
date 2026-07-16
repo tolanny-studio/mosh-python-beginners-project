@@ -34,10 +34,7 @@ def get_betting_amount(starting_amount):
 
 
 def spin_slots():
-    selected_symbol = []
-    for _ in range(len(SYMBOLS)):
-        selected_symbol.append(random.choice(SYMBOLS))
-    return selected_symbol
+    return [random.choice(SYMBOLS) for _ in range(len(SYMBOLS))]
 
 
 def count_matches(selected_symbol):
@@ -54,7 +51,7 @@ def count_matches(selected_symbol):
 
 
 def display_symbol(selected_symbol):
-    
+
     return "| " + " | ".join(selected_symbol) + " |"
 
 
