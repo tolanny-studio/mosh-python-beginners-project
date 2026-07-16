@@ -1,4 +1,5 @@
 import random
+from pathlib import Path
 
 # Available slot machine symbols.
 SYMBOLS = ["🍉", "🍊", "🍌"]
@@ -6,6 +7,10 @@ SYMBOLS = ["🍉", "🍊", "🍌"]
 # Winning Matches
 TWO_MATCH_MULTIPLIER = 2
 THREE_MATCH_MULTIPLIER = 10
+
+# File path to load balance
+
+BALANCE_FILE = Path(__file__).parent / "balance.txt"
 
 
 def validate_amount(prompt):
@@ -32,15 +37,26 @@ def validate_amount(prompt):
 
 
 def get_starting_amount():
-    """Prompt the user for the starting balance.
+    """Return the player's saved balance or prompt for a new one."""
+    try:
+        with open(BALANCE_FILE, "r") as file:
+            balance = file.readline().strip()
 
-    Returns:
-        int: The player's starting balance.
-    """
-    return validate_amount("Enter starting amount: ")
+            if not balance:
+                return validate_amount("Enter starting amount: ")
+
+            return int(balance)
+
+    except FileNotFoundError:
+        return validate_amount("Enter starting amount: ")
 
 
-def get_betting_amount(starting_amount):
+def save_balance(balance):
+    with open(BALANCE_FILE, "w") as file:
+        file.write(str(balance))
+
+
+def load_balance(starting_amount):
     """Prompt the user for a valid betting amount.
 
     The betting amount cannot exceed the player's current balance.
@@ -117,10 +133,8 @@ def play_game():
             - Formatted slot machine display.
     """
     selected_symbol = spin_slots()
-    match_count = count_matches(selected_symbol)
-    selected_symbol_string = display_symbol(selected_symbol)
 
-    return match_count, selected_symbol_string
+    return count_matches(selected_symbol), display_symbol(selected_symbol)
 
 
 def replay_game():
@@ -130,7 +144,7 @@ def replay_game():
         bool: True if the player wants to continue, otherwise False.
     """
     while True:
-        replay = input("\nDo you want to replay game 🔄️: ").lower()
+        replay = input("\nDo you want to replay game 🔄️: ").lower().strip()
 
         if replay not in ("y", "n"):
             print("Invalid input ⛔ Enter character y or n")
@@ -145,7 +159,7 @@ def main():
 
     while current_balance > 0:
         print(f"Current balance: ${current_balance}")
-        bet_amount = get_betting_amount(current_balance)
+        bet_amount = load_balance(current_balance)
         amount_won = 0
 
         print(f"Bet amount: ${bet_amount}")
@@ -158,21 +172,21 @@ def main():
         if match_count == 1:
             print("No match.")
         elif match_count == 2:
-                print("Two symbols matched!")
-                amount_won = TWO_MATCH_MULTIPLIER * bet_amount
-                current_balance += amount_won
+            print("Two symbols matched!")
+            amount_won = TWO_MATCH_MULTIPLIER * bet_amount
+            current_balance += amount_won
         else:
-                print("Three symbols matched!")
-                amount_won = THREE_MATCH_MULTIPLIER * bet_amount
-                current_balance += amount_won
-
+            print("Three symbols matched!")
+            amount_won = THREE_MATCH_MULTIPLIER * bet_amount
+            current_balance += amount_won
+        save_balance(current_balance)
         print(f"\n{selected_symbol_string}")
         print(f"Amount Won: ${amount_won}")
         print(f"Current Balance: ${current_balance}")
 
         if not replay_game():
-          print("Thanks for playing")
-          break
+            print("Thanks for playing")
+            break
 
 
 if __name__ == "__main__":
