@@ -41,31 +41,29 @@ def spin_slots():
 
 
 def count_matches(selected_symbol):
-    symbol_occurrence_list = []
-    symbol_occurrence = 1
+    seen_symbols = []
+    match_count = 1
+
     for symbol in selected_symbol:
-        if symbol in symbol_occurrence_list:
-            symbol_occurrence += 1
-        symbol_occurrence_list.append(symbol)
-    return symbol_occurrence
+        if symbol in seen_symbols:
+            match_count += 1
+
+        seen_symbols.append(symbol)
+
+    return match_count
 
 
 def display_symbol(selected_symbol):
-    selected_symbol_string = ""
-    for index, symbol in enumerate(selected_symbol):
-        if index < len(selected_symbol) - 1:
-            selected_symbol_string += f"| {symbol} "
-        else:
-            selected_symbol_string += f"| {symbol} |"
-    return selected_symbol_string
+    
+    return "| " + " | ".join(selected_symbol) + " |"
 
 
 def play_game():
 
     selected_symbol = spin_slots()
-    symbol_occurrence = count_matches(selected_symbol)
+    match_count = count_matches(selected_symbol)
     selected_symbol_string = display_symbol(selected_symbol)
-    return symbol_occurrence, selected_symbol_string
+    return match_count, selected_symbol_string
 
 
 def replay_game():
@@ -87,18 +85,18 @@ def main():
             amount_won = 0
             print(f"Bet amount: ${bet_amount}")
             if bet_amount:
-                symbol_occurrence, selected_symbol_string = play_game()
+                match_count, selected_symbol_string = play_game()
                 current_balance -= bet_amount
-                if symbol_occurrence == 1:
+                if match_count == 1:
                     print("first")
                     current_balance += amount_won
-                elif symbol_occurrence == 2:
+                elif match_count == 2:
                     print("second")
                     amount_won = 2 * bet_amount
                     current_balance += amount_won
                 else:
                     print("third")
-                    amount_won = 10 * current_balance
+                    amount_won = 10 * bet_amount
                     current_balance += amount_won
                 print(f"\n{selected_symbol_string}")
                 print(f"Amount Won: ${amount_won}")
