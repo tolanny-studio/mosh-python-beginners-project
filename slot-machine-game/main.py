@@ -39,25 +39,32 @@ def spin_slots():
         selected_symbol.append(random.choice(SYMBOLS))
     return selected_symbol
 
-def count_matches():
-  pass
 
-def play_game():
-    selected_symbol = spin_slots()
-    symbol_occurrence = 1
+def count_matches(selected_symbol):
     symbol_occurrence_list = []
-    selected_symbol_string = ""
+    symbol_occurrence = 1
+    for symbol in selected_symbol:
+        if symbol in symbol_occurrence_list:
+            symbol_occurrence += 1
+        symbol_occurrence_list.append(symbol)
+    return symbol_occurrence
 
+
+def display_symbol(selected_symbol):
+    selected_symbol_string = ""
     for index, symbol in enumerate(selected_symbol):
         if index < len(selected_symbol) - 1:
             selected_symbol_string += f"| {symbol} "
         else:
             selected_symbol_string += f"| {symbol} |"
+    return selected_symbol_string
 
-        if symbol in symbol_occurrence_list:
-            symbol_occurrence += 1
-        symbol_occurrence_list.append(symbol)
 
+def play_game():
+
+    selected_symbol = spin_slots()
+    symbol_occurrence = count_matches(selected_symbol)
+    selected_symbol_string = display_symbol(selected_symbol)
     return symbol_occurrence, selected_symbol_string
 
 
@@ -83,14 +90,14 @@ def main():
                 symbol_occurrence, selected_symbol_string = play_game()
                 current_balance -= bet_amount
                 if symbol_occurrence == 1:
-
+                    print("first")
                     current_balance += amount_won
                 elif symbol_occurrence == 2:
-
+                    print("second")
                     amount_won = 2 * bet_amount
                     current_balance += amount_won
                 else:
-
+                    print("third")
                     amount_won = 10 * current_balance
                     current_balance += amount_won
                 print(f"\n{selected_symbol_string}")
