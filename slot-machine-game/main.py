@@ -52,6 +52,11 @@ def get_starting_amount():
 
 
 def save_balance(balance):
+    """Save the player's current balance to the balance file.
+
+    Args:
+        balance (int): The balance to be written to the file.
+    """
     with open(BALANCE_FILE, "w") as file:
         file.write(str(balance))
 
@@ -179,6 +184,7 @@ def main():
             print("Three symbols matched!")
             amount_won = THREE_MATCH_MULTIPLIER * bet_amount
             current_balance += amount_won
+        # Save the updated balance so it can be restored next time.
         save_balance(current_balance)
         print(f"\n{selected_symbol_string}")
         print(f"Amount Won: ${amount_won}")
