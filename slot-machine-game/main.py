@@ -145,38 +145,34 @@ def main():
 
     while current_balance > 0:
         print(f"Current balance: ${current_balance}")
+        bet_amount = get_betting_amount(current_balance)
+        amount_won = 0
 
-        while True:
-            bet_amount = get_betting_amount(current_balance)
-            amount_won = 0
+        print(f"Bet amount: ${bet_amount}")
 
-            print(f"Bet amount: ${bet_amount}")
+        # Deduct the player's bet before spinning.
+        current_balance -= bet_amount
 
-            # Deduct the player's bet before spinning.
-            current_balance -= bet_amount
+        match_count, selected_symbol_string = play_game()
 
-            match_count, selected_symbol_string = play_game()
-
-            if match_count == 1:
-                print("No match.")
-            elif match_count == 2:
+        if match_count == 1:
+            print("No match.")
+        elif match_count == 2:
                 print("Two symbols matched!")
                 amount_won = TWO_MATCH_MULTIPLIER * bet_amount
                 current_balance += amount_won
-            else:
+        else:
                 print("Three symbols matched!")
                 amount_won = THREE_MATCH_MULTIPLIER * bet_amount
                 current_balance += amount_won
 
-            print(f"\n{selected_symbol_string}")
-            print(f"Amount Won: ${amount_won}")
-            print(f"Current Balance: ${current_balance}")
+        print(f"\n{selected_symbol_string}")
+        print(f"Amount Won: ${amount_won}")
+        print(f"Current Balance: ${current_balance}")
 
-            if not replay_game():
-                break
-
-        print("Thanks for playing")
-        break
+        if not replay_game():
+          print("Thanks for playing")
+          break
 
 
 if __name__ == "__main__":
