@@ -13,9 +13,7 @@ def main():
 
         if option == 1:
             # Check Balance
-            balance = Balance()
-            balance.set_balance(current_balance)
-            balance.print_balance()
+            print(f"The balance is ${current_balance}")
         if option == 2:
             # Deposit
             deposit = Deposit()
