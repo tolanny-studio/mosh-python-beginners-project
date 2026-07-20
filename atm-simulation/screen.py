@@ -8,10 +8,15 @@ class Screen:
         while True:
             try:
                 option = int(input(prompt))
-                return option
             except ValueError:
                 print("Invalid input")
                 continue
+
+            if option not in (1, 2, 3, 4):
+                print("Invalid option")
+                continue
+
+            return option
 
     def get_option(self):
         return self.__option
