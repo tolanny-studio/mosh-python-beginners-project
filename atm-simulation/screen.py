@@ -1,9 +1,9 @@
 class Screen:
     """Display the ATM menu and collect a valid menu option."""
     def __init__(self):
-        print("WELCOME TO THE ATM!\n1.Check Balance\n2.Deposit\n3.Withdraw\n4.Exit ")
+        print("\nWELCOME TO THE ATM!\n1.Check Balance\n2.Deposit\n3.Withdraw\n4.Exit ")
 
-        self.__option = self.__validate_option("Please enter an option: ")
+        self.__option = self.__validate_option("\nPlease enter an option: ")
 
     def __validate_option(self, prompt):
         while True:
@@ -14,7 +14,7 @@ class Screen:
                 continue
 
             if option not in (1, 2, 3, 4):
-                print("Invalid option")
+                print("Invalid option. Enter between 1 - 4")
                 continue
 
             return option

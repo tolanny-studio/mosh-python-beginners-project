@@ -3,37 +3,44 @@ from screen import Screen
 from deposit import Deposit
 from withdraw import Withdraw
 from validate import validate_amount
+from balance import read_balance, write_balance
 
 
 def main():
-    current_balance = 300
+    #Read from file
+    current_balance = read_balance()
     while True:
         screen = Screen()
         option = screen.get_option()
 
         if option == 1:
             # Check Balance
-            print(f"The balance is ${current_balance}")
+            print(f"\nThe balance is ${current_balance}")
         elif option == 2:
             # Deposit
-            amount = validate_amount("Enter deposit amount : ")
+            amount = validate_amount("\nEnter deposit amount : ")
             if amount is None:
                 continue
             deposit = Deposit(amount)
             current_balance = deposit.update_balance(current_balance)
+            # Write to file
+            write_balance(current_balance)
 
         elif option == 3:
             # Withdraw
-            amount = validate_amount("Enter withdraw amount : ")
+            amount = validate_amount("\nEnter withdraw amount : ")
             if amount is None:
                 continue
             withdraw = Withdraw(current_balance, amount)
             current_balance = withdraw.withdraw()
+            # Write to file
+            write_balance(current_balance)
 
         elif option == 4:
+            # Exit application
             exit()
         else:
-            print("only options 1-4 is allowed")
+            break
 
 
 if __name__ == "__main__":
