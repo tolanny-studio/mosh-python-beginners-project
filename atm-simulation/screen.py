@@ -1,4 +1,5 @@
 class Screen:
+    """Display the ATM menu and collect a valid menu option."""
     def __init__(self):
         print("WELCOME TO THE ATM!\n1.Check Balance\n2.Deposit\n3.Withdraw\n4.Exit ")
 

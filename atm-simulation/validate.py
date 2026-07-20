@@ -1,7 +1,17 @@
 def validate_amount(prompt):
+    """
+    Prompt the user for an integer amount.
+
+    Args:
+        prompt (str): Message displayed to the user.
+
+    Returns:
+        int | None:
+            The entered integer if valid,
+            otherwise None.
+    """
     try:
-        amount = int(input(prompt))
-        return amount
+        return int(input(prompt))
     except ValueError:
-        print("The type should be of integer")
-        
+        print("Invalid input. Please enter an integer.")
+        return None
