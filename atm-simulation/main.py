@@ -14,24 +14,26 @@ def main():
         if option == 1:
             # Check Balance
             print(f"The balance is ${current_balance}")
-        if option == 2:
+        elif option == 2:
             # Deposit
             amount = validate_amount("Enter deposit amount : ")
-            if not amount:
+            if amount is None:
                 continue
             deposit = Deposit(amount)
             current_balance = deposit.update_balance(current_balance)
 
-        if option == 3:
+        elif option == 3:
             # Withdraw
             amount = validate_amount("Enter withdraw amount : ")
-            if not amount:
+            if amount is None:
                 continue
-            withdraw = Withdraw(current_balance)
+            withdraw = Withdraw(current_balance, amount)
             current_balance = withdraw.withdraw()
 
-        if option == 4:
+        elif option == 4:
             exit()
+        else:
+            print("only options 1-4 is allowed")
 
 
 if __name__ == "__main__":
