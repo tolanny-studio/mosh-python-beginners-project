@@ -1,7 +1,6 @@
 from sys import exit
 from screen import Screen
 from deposit import Deposit
-from balance import Balance
 from withdraw import Withdraw
 
 
@@ -16,7 +15,12 @@ def main():
             print(f"The balance is ${current_balance}")
         if option == 2:
             # Deposit
-            deposit = Deposit()
+            try:
+              amount = int(input("Enter deposit amount: "))
+            except ValueError:
+              print("The type should be of integer")
+              continue
+            deposit = Deposit(amount)
             current_balance = deposit.update_balance(current_balance)
 
         if option == 3:
