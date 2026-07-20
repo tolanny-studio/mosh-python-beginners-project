@@ -2,6 +2,7 @@ from sys import exit
 from screen import Screen
 from deposit import Deposit
 from withdraw import Withdraw
+from validate import validate_amount
 
 
 def main():
@@ -15,16 +16,17 @@ def main():
             print(f"The balance is ${current_balance}")
         if option == 2:
             # Deposit
-            try:
-              amount = int(input("Enter deposit amount: "))
-            except ValueError:
-              print("The type should be of integer")
-              continue
+            amount = validate_amount("Enter deposit amount : ")
+            if not amount:
+                continue
             deposit = Deposit(amount)
             current_balance = deposit.update_balance(current_balance)
 
         if option == 3:
             # Withdraw
+            amount = validate_amount("Enter withdraw amount : ")
+            if not amount:
+                continue
             withdraw = Withdraw(current_balance)
             current_balance = withdraw.withdraw()
 
