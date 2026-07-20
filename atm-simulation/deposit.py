@@ -1,3 +1,6 @@
+from termcolor import cprint
+
+
 class Deposit:
     """Represent a deposit transaction."""
 
@@ -19,7 +22,7 @@ class Deposit:
             otherwise False.
         """
         if self.__deposit <= 0:
-            print("Invalid input! Amount must be greater than $0.")
+            cprint("\nInvalid input ⛔ Amount must be greater than $0.","yellow")
             return False
         return True
 
@@ -38,9 +41,10 @@ class Deposit:
 
         current_balance += self.__deposit
 
-        print(
-            f"${self.__deposit} deposited.\n"
-            f"The current balance is now ${current_balance}"
+        cprint(
+            f"\n${self.__deposit} deposited.\n"
+            f"The current balance is now ${current_balance}",
+            "green",
         )
 
         return current_balance

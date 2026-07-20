@@ -4,10 +4,11 @@ from deposit import Deposit
 from withdraw import Withdraw
 from validate import validate_amount
 from balance import read_balance, write_balance
+from termcolor import cprint
 
 
 def main():
-    #Read from file
+    # Read from file
     current_balance = read_balance()
     while True:
         screen = Screen()
@@ -15,7 +16,7 @@ def main():
 
         if option == 1:
             # Check Balance
-            print(f"\nThe balance is ${current_balance}")
+            cprint(f"\nThe balance is ${current_balance}", "green")
         elif option == 2:
             # Deposit
             amount = validate_amount("\nEnter deposit amount : ")
@@ -38,6 +39,7 @@ def main():
 
         elif option == 4:
             # Exit application
+            cprint("\nThanks for banking with us", "green")
             exit()
         else:
             break

@@ -1,3 +1,4 @@
+from termcolor import cprint
 class Screen:
     """Display the ATM menu and collect a valid menu option."""
     def __init__(self):
@@ -10,11 +11,11 @@ class Screen:
             try:
                 option = int(input(prompt))
             except ValueError:
-                print("Invalid input")
+                cprint("Invalid input ⛔","yellow")
                 continue
 
             if option not in (1, 2, 3, 4):
-                print("Invalid option. Enter between 1 - 4")
+                cprint("Invalid option ⛔ Enter between 1 - 4","yellow")
                 continue
 
             return option

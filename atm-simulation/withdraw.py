@@ -1,3 +1,4 @@
+from termcolor import cprint
 class Withdraw:
     """Represent a withdrawal transaction."""
 
@@ -29,13 +30,14 @@ class Withdraw:
             bool: True if the amount is valid.
         """
         if self.__amount <= 0:
-            print("Withdrawal amount must be greater than $0.")
+            cprint("Withdrawal amount must be greater than $0 ⛔","yellow")
             return False
 
         if not self.check_balance():
-            print(
-                f"The amount entered (${self.__amount}) exceeds "
-                f"the current balance (${self.__current_balance})."
+            cprint(
+                f"The amount entered (${self.__amount}) exceeds ⛔"
+                f"the current balance (${self.__current_balance}).",
+                "yellow",
             )
             return False
 
@@ -53,9 +55,11 @@ class Withdraw:
 
         self.__current_balance -= self.__amount
 
-        print(
+        cprint(
             f"${self.__amount} withdrawn.\n"
-            f"The current balance is now ${self.__current_balance}"
+            f"The current balance is now ${self.__current_balance}",
+            "magenta",
         )
 
         return self.__current_balance
+    

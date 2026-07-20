@@ -10,7 +10,7 @@ def read_balance():
             try:
                 _balance = int(file.read())
                 balance = _balance
-            except OSError as e:
+            except ValueError as e:
                 print(e)
     except FileNotFoundError:
         print("File not found")

@@ -1,3 +1,4 @@
+from termcolor import cprint
 def validate_amount(prompt):
     """
     Prompt the user for an integer amount.
@@ -13,5 +14,5 @@ def validate_amount(prompt):
     try:
         return int(input(prompt))
     except ValueError:
-        print("Invalid input. Please enter an integer.")
+        cprint("Invalid input. Please enter an integer.","yellow")
         return None
