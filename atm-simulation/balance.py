@@ -4,17 +4,17 @@ BALANCE_FILE = Path(__file__).parent / "balance.txt"
 
 
 def read_balance():
-    balance = 0
-    try:
-        with open(BALANCE_FILE, "r") as file:
+    with open(BALANCE_FILE, "r") as file:
             try:
-                _balance = int(file.read())
-                balance = _balance
+                return int(file.read())   
+            except FileNotFoundError:
+                print("File not found")
+                return 0
             except ValueError as e:
-                print(e)
-    except FileNotFoundError:
-        print("File not found")
-    return balance
+                print("Invalid balance format in file")
+                return 0
+
+
 
 
 def write_balance(current_balance):
