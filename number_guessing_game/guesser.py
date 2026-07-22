@@ -1,8 +1,11 @@
 import random
+import logging
 from pathlib import Path
 from termcolor import cprint
 
 LOWEST_ATTEMPT_FILE = Path(__file__).parent / "lowest-attempt.txt"
+
+logger = logging.getLogger(__name__)
 
 
 class GuessNumber:
@@ -13,7 +16,23 @@ class GuessNumber:
             self.__lowest_number, self.__highest_number
         )
         self.__attempt = 0
-        self.__lowest_attempt = int(LOWEST_ATTEMPT_FILE.read_text())
+        self.__lowest_attempt = self.get_lowest_attempt()
+
+    def get_lowest_attempt(self):
+        try:
+            lowest_attempt = int(LOWEST_ATTEMPT_FILE.read_text())
+        except FileNotFoundError:
+            logger.warning("File does not exist")
+            LOWEST_ATTEMPT_FILE.write_text("0")
+            return 0
+        except ValueError as e:
+            logger.error("Invalid number %s", e)
+            return 0
+        except:
+            logger.error("Invalid number")
+            return 0
+        else:
+            return lowest_attempt
 
     def get_number(self):
         return int(input("\nGuess a number between 1 and 100: "))
@@ -31,13 +50,21 @@ class GuessNumber:
             "on_light_green",
         )
 
+    def reset_game(self):
+        self.__attempt = 0
+        self.__highest_number = 100
+        self.__lowest_number = 1
+        self.__random_number = random.randint(
+            self.__lowest_number, self.__highest_number
+        )
+
     def retry_game(self):
         while True:
             retry = input("\nDo you wish to retry ?").lower()
             if retry not in ("y", "n"):
                 cprint("Invalid Input ⛔ Enter y or n")
                 continue
-            self.__attempt = 0
+            self.reset_game()
             return retry == "y"
 
     def play(self):
@@ -58,10 +85,11 @@ class GuessNumber:
                 elif guess == self.__random_number:
                     print("\nYou guessed right!")
                     self.update_attempt()
-                    self.print_attempts()
                     if self.__attempt < self.__lowest_attempt:
                         self.__lowest_attempt = self.__attempt
                         LOWEST_ATTEMPT_FILE.write_text(str(self.__lowest_attempt))
+                        print(f"🎉 New Record!Lowest attempts: {self.__lowest_attempt}")
+                    self.print_attempts()
                     break
                 elif guess > self.__random_number:
                     self.update_attempt()
