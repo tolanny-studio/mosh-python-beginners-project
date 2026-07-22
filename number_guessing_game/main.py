@@ -1,11 +1,11 @@
 from guesser import GuessNumber
-
+from termcolor import cprint
 
 def main():
 
     game = GuessNumber()
-    print("\nWelcome to number guessing game 🔢 ")
-    print(f"\nLowest Attempt : {game.lowest_attempts()}")
+    cprint("\nWELCOME TO NUMBER GUESSING GAME 🔢 ","light_green",attrs=["bold"])
+    cprint(f"\nLowest Attempt : {game.lowest_attempts()} ","green","on_light_green")
     game.play()
 
 
