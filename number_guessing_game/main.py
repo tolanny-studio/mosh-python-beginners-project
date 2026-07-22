@@ -1,8 +1,12 @@
 from guesser import GuessNumber
 
+
 def main():
+
     game = GuessNumber()
-    game.guess_number()
+    print("\nWelcome to number guessing game 🔢 ")
+    print(f"\nLowest Attempt : {game.lowest_attempts()}")
+    game.play()
 
 
 if __name__ == "__main__":
